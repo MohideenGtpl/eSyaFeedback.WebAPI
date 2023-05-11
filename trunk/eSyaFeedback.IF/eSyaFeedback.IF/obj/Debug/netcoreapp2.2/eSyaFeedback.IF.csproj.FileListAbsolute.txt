@@ -1,0 +1,9 @@
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\bin\Debug\netcoreapp2.2\eSyaFeedback.IF.deps.json
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\bin\Debug\netcoreapp2.2\eSyaFeedback.IF.dll
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\bin\Debug\netcoreapp2.2\eSyaFeedback.IF.pdb
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.csproj.CoreCompileInputs.cache
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.AssemblyInfoInputs.cache
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.AssemblyInfo.cs
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.dll
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.pdb
+D:\eSya Project\Solution\Project_eSyaWebAPI\eSyaFeedback.WebAPI\trunk\eSyaFeedback.IF\eSyaFeedback.IF\obj\Debug\netcoreapp2.2\eSyaFeedback.IF.csprojAssemblyReference.cache

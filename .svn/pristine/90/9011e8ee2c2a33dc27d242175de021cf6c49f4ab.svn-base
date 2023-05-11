@@ -1,0 +1,110 @@
+﻿using eSyaFeedback.DL.Entities;
+using eSyaFeedback.DO;
+using eSyaFeedback.DO.StaticVariables;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eSyaFeedback.DL.Repository
+{
+    public class PatientFeedbackTransactionRepository
+    {
+        private eSyaEnterprise _context { get; set; }
+        public PatientFeedbackTransactionRepository(eSyaEnterprise context)
+        {
+            _context = context;
+        }
+        public async Task InsertIntoPatientFeedbackQuestionnaire(DO_PatientFeedback obj)
+        {
+
+            using (var dbContextTransaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+
+                    GtFbptdt pt = new GtFbptdt();
+                    pt.BusinessKey = obj.BusinessKey;
+                    pt.FinancialYear = (short)System.DateTime.Now.Year;
+                    pt.DocumentId = 1;
+
+                    var dc_FB = await _context.GtEcdcbn
+                         .Where(w => w.BusinessKey == obj.BusinessKey && w.FinancialYear == obj.FinancialYear
+                             && w.DocumentId == DocumentIdValues.FB_DocumentId).FirstOrDefaultAsync();
+                    dc_FB.CurrentDocNumber = dc_FB.CurrentDocNumber + 1;
+                    obj.FBDocumentKey = long.Parse(obj.FinancialYear.ToString().Substring(2, 2) + obj.BusinessKey.ToString().PadLeft(2, '0') + dc_FB.CurrentDocNumber.ToString());
+
+                    pt.DocumentNumber = (int)dc_FB.CurrentDocNumber;
+                    pt.FbdocumentKey = obj.FBDocumentKey;
+                    pt.DocumentDate = System.DateTime.Now;
+                    pt.FeedBackType = obj.FeedBackType;
+                    pt.FloorId = obj.FloorId;
+                    pt.RUhid = obj.UHID;
+                    pt.PatientName = obj.PatientName;
+                    pt.MobileNumber = obj.MobileNumber;
+                    pt.DoctorId = obj.DoctorId;
+                    pt.DoctorName = obj.DoctorName;
+                    pt.PatientType = obj.PatientType;
+                    pt.SpecialtyId = obj.SpecialtyId;
+                    pt.ReportedDate = System.DateTime.Now;//obj.ReportedDate;
+                    pt.CommentOnServices = obj.CommentOnServices;
+                    pt.OverAllRating = obj.OverAllRating;
+                    pt.ActiveStatus = true;
+                    pt.FormId = obj.FormId;
+                    pt.CreatedBy = obj.UserID;
+                    pt.CreatedOn = System.DateTime.Now;
+                    pt.CreatedTerminal = obj.TerminalID;
+
+                    _context.GtFbptdt.Add(pt);
+
+                    foreach (var q in obj.l_QuestionnaireMaster.Where(w => w.QuestionnaireValue > 0))
+                    {
+                        GtFbptqe p_q = new GtFbptqe();
+                        p_q.BusinessKey = pt.BusinessKey;
+                        p_q.FbdocumentKey = pt.FbdocumentKey;
+                        p_q.QuestionnaireId = q.QuestionnaireID;
+                        p_q.QuestionnaireValue = q.QuestionnaireValue;
+                        p_q.ActiveStatus = true;
+                        //p_q.FormId = obj.FormId;
+                        //p_q.CreatedBy = obj.UserID;
+                        p_q.CreatedOn = System.DateTime.Now;
+                        p_q.CreatedTerminal = obj.TerminalID;
+
+                        _context.GtFbptqe.Add(p_q);
+                    }
+
+                    if (obj.l_CommentCode != null)
+                    {
+                        foreach (var c in obj.l_CommentCode)
+                        {
+                            GtFbptcm p_c = new GtFbptcm();
+                            p_c.BusinessKey = pt.BusinessKey;
+                            p_c.FbdocumentKey = pt.FbdocumentKey;
+                            p_c.CommentCode = c;
+                            p_c.ActiveStatus = true;
+                            p_c.FormId = obj.FormId;
+                            p_c.CreatedBy = obj.UserID;
+                            p_c.CreatedOn = System.DateTime.Now;
+                            p_c.CreatedTerminal = obj.TerminalID;
+
+                            _context.GtFbptcm.Add(p_c);
+                        }
+                    }
+
+
+                    _context.SaveChanges();
+                    dbContextTransaction.Commit();
+
+                }
+
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+﻿using eSyaFeedback.DO;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eSyaFeedback.IF
+{
+    public interface IFeedbackQuestionnaireRepository
+    {
+        Task<List<DO_QuestionnaireGroup>> GetQuestionnaireGroup(string feedBackType, string langauge);
+
+        Task<List<DO_QuestionnaireMaster>> GetQuestionnaireMaster(string feedBackType, string langauge);
+
+        Task<DO_ReturnParameter> InsertIntoQuestionnaireGroup(DO_QuestionnaireGroup obj);
+
+        Task<DO_ReturnParameter> InsertIntoMaster(DO_QuestionnaireMaster obj);
+    }
+}

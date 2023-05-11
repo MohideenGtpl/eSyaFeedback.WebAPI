@@ -1,0 +1,64 @@
+﻿using eSyaFeedback.DL.Entities;
+using eSyaFeedback.DO;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace eSyaFeedback.DL.Repository
+{
+    public class FeedbackQuestionnaireRepository
+    {
+        private eSyaEnterprise _context { get; set; }
+        public FeedbackQuestionnaireRepository(eSyaEnterprise context)
+        {
+            _context = context;
+        }
+        public async Task<List<DO_QuestionnaireGroup>> GetQuestionnaireGroup(string feedBackType, string langauge)
+        {
+            try
+            {
+
+                var q_grp = await _context.GtFbqegr
+                            .Where(x => x.FeedBackType == feedBackType && x.Langauge == langauge
+                                                && x.ActiveStatus)
+                            .Select(x => new DO_QuestionnaireGroup
+                            {
+                                QuestionnaireGroupID = x.QuestionnaireGroupId,
+                                QuestionnaireGroupDesc = x.QuestionnaireGroupDesc,
+                            }).ToListAsync();
+                return q_grp;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<DO_QuestionnaireMaster>> GetQuestionnaireMaster(string feedBackType, string langauge)
+        {
+            try
+            {
+                var q_grp = await _context.GtFbqems
+                    .Where(x => x.FeedBackType == feedBackType && x.Langauge == langauge
+                                                && x.ActiveStatus)
+                    .Select(x => new DO_QuestionnaireMaster
+                    {
+                        QuestionnaireGroupID = x.QuestionnaireGroupId,
+                        QuestionnaireID = x.QuestionnaireId,
+                        QuestionnaireDesc = x.QuestionnaireDesc,
+                        QType = x.Qtype,
+                        DisplayOrder = x.DisplayOrder,
+                    }).OrderBy(o => o.DisplayOrder).ToListAsync();
+                return q_grp;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
+}

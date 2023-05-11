@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eSyaFeedback.DO;
+using eSyaFeedback.IF;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace eSyaFeedback.WebAPI.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class PatientFeedbackTransactionController : ControllerBase
+    {
+        private readonly IPatientFeedbackTransactionRepository _PatientFeedbackTransactionRepository;
+
+        public PatientFeedbackTransactionController(IPatientFeedbackTransactionRepository PatientFeedbackTransactionRepository)
+        {
+            _PatientFeedbackTransactionRepository = PatientFeedbackTransactionRepository;
+
+        }
+        /// <summary>
+        /// Insert QuestionnaireMaster.
+        /// UI Reffered -Patient Feedback
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> InsertIntoPatientFeedbackQuestionnaire(DO_PatientFeedback obj)
+        {
+            var msg = await _PatientFeedbackTransactionRepository.InsertIntoPatientFeedbackQuestionnaire(obj);
+            return Ok(msg);
+
+        }
+        /// <summary>
+        /// Getting  Floor for dropdown.
+        /// UI Reffered - Patient Feedback
+        /// </summary>
+        [HttpGet]
+        public IActionResult GetFloorsbyCodeType(int codetype)
+        {
+            var floors = _PatientFeedbackTransactionRepository.GetFloorsbyCodeType(codetype);
+            return Ok(floors);
+        }
+
+        /// <summary>
+        /// Getting  Specialities for dropdown.
+        /// UI Reffered - Patient Feedback
+        /// </summary>
+        [HttpGet]
+        public IActionResult GetSpecialtiesByBusinessKey(int businesskey)
+        {
+            var specialities = _PatientFeedbackTransactionRepository.GetSpecialtiesByBusinessKey(businesskey);
+            return Ok(specialities);
+        }
+
+        /// <summary>
+        /// Getting  Doctors for dropdown.
+        /// UI Reffered - Patient Feedback
+        /// </summary>
+        [HttpGet]
+        public IActionResult GetDoctorsByBusinessKey(int businesskey)
+        {
+            var doctors = _PatientFeedbackTransactionRepository.GetDoctorsByBusinessKey(businesskey);
+            return Ok(doctors);
+        }
+    }
+}

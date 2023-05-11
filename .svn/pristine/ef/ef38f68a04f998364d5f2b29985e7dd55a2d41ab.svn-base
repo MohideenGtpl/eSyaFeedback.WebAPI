@@ -1,0 +1,70 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using eSyaFeedback.DO;
+using eSyaFeedback.IF;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+
+namespace eSyaFeedback.WebAPI.Controllers
+{
+    [Route("api/[controller]/[action]")]
+    [ApiController]
+    public class FeedbackQuestionnaireController : ControllerBase
+    {
+        private readonly IFeedbackQuestionnaireRepository _FeedbackQuestionnaireRepository;
+        
+        public FeedbackQuestionnaireController(IFeedbackQuestionnaireRepository FeedbackQuestionnaireRepository)
+        {
+            _FeedbackQuestionnaireRepository = FeedbackQuestionnaireRepository;
+           
+        }
+
+        /// <summary>
+        /// Getting  Questionnaire Group.
+        /// UI Reffered - Patient Feedback
+        /// </summary>
+        [HttpGet]
+        public IActionResult GetQuestionnaireGroup(string feedBackType, string langauge)
+        {
+            var q_group = _FeedbackQuestionnaireRepository.GetQuestionnaireGroup(feedBackType, langauge);
+            return Ok(q_group);
+        }
+
+        /// <summary>
+        /// Getting  Questionnaire Master.
+        /// UI Reffered - Patient Feedback
+        /// </summary>
+        [HttpGet]
+        public IActionResult GetQuestionnaireMaster(string feedBackType, string langauge)
+        {
+            var q_master = _FeedbackQuestionnaireRepository.GetQuestionnaireMaster(feedBackType, langauge);
+            return Ok(q_master);
+        }
+
+        /// <summary>
+        /// Insert QuestionnaireGroup.
+        /// UI Reffered -Patient Feedback
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> InsertIntoQuestionnaireGroup(DO_QuestionnaireGroup obj)
+        {
+            var msg = await _FeedbackQuestionnaireRepository.InsertIntoQuestionnaireGroup(obj);
+            return Ok(msg);
+
+        }
+
+        /// <summary>
+        /// Insert QuestionnaireMaster.
+        /// UI Reffered -Patient Feedback
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> InsertIntoMaster(DO_QuestionnaireMaster obj)
+        {
+            var msg = await _FeedbackQuestionnaireRepository.InsertIntoMaster(obj);
+            return Ok(msg);
+
+        }
+    }
+}
